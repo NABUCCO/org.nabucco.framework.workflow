@@ -1,0 +1,42 @@
+/*
+ * Copyright 2010 PRODYNA AG
+ *
+ * Licensed under the Eclipse Public License (EPL), Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.opensource.org/licenses/eclipse-1.0.php or
+ * http://nabuccosource.org/License.html
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.nabucco.framework.workflow.facade.datatype.definition.effect.assignee;
+
+import org.nabucco.framework.base.facade.datatype.Name;
+import org.nabucco.framework.workflow.facade.datatype.definition.effect.WorkflowEffect;
+import org.nabucco.framework.workflow.facade.datatype.definition.effect.WorkflowEffectType;
+
+@Author			Nicolas Moser
+@Company		PRODYNA AG
+@Date			2011-02-18
+@Description	Changes the Assignee of the current workflow instance
+public Datatype AssigneeEffect extends WorkflowEffect {
+	
+	@Redefined
+	@Default 		ASSIGNEE
+	protected Enumeration WorkflowEffectType[1] effectType;
+
+	@Description	The new assigned user.
+	private Basetype Name[0..1] newUser;
+	
+	@Description	The new assigned group.
+	private Basetype Name[0..1] newGroup;
+	
+	@Description	The new assigned role.
+	private Basetype Name[0..1] newRole;
+
+}

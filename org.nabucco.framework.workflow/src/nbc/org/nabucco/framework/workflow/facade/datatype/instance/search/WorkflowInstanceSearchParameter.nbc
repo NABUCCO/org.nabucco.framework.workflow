@@ -1,0 +1,90 @@
+/*
+* Copyright 2011 PRODYNA AG
+*
+* Licensed under the Eclipse Public License (EPL), Version 1.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.opensource.org/licenses/eclipse-1.0.php or
+* http://nabuccosource.org/License.html
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+package org.nabucco.framework.workflow.facade.datatype.instance.search;
+
+import org.nabucco.framework.base.facade.datatype.Description;
+import org.nabucco.framework.base.facade.datatype.Name;
+import org.nabucco.framework.base.facade.datatype.Owner;
+import org.nabucco.framework.base.facade.datatype.code.Code;
+import org.nabucco.framework.base.facade.datatype.date.Date;
+import org.nabucco.framework.base.facade.datatype.date.Timestamp;
+import org.nabucco.framework.workflow.facade.datatype.definition.search.WorkflowDefinitionSearchParameter;
+import org.nabucco.framework.workflow.facade.datatype.instance.search.WorkflowInstanceAssignee;
+
+
+@Author			Nicolas Moser
+@Company		PRODYNA AG
+@Date			2011-05-08
+@Version		1.0
+@Description	The search parameter for searching workflow instances. 
+public Datatype WorkflowInstanceSearchParameter {
+	
+	@Description 	Owner of the workflow instance.
+	private Basetype Owner[0..1] owner;
+
+	@Description 	Name of the workflow instance.
+	private Basetype Name[0..1] name;
+
+	@Description 	Name of the workflow instance creator.
+	private Basetype Name[0..1] creator;
+
+	@Description 	Name of the workflow instance modifier.
+	private Basetype Name[0..1] modifier;
+
+	@Description 	The current workflow instance assignee.
+	private Datatype WorkflowInstanceAssignee[0..1] assignedUser;
+
+	@Description 	The current workflow instance assigned groups (OR).
+	private Datatype WorkflowInstanceAssignee[0..*] assignedGroups;
+
+	@Description 	The current workflow instance assigned roles (OR).
+	private Datatype WorkflowInstanceAssignee[0..*] assignedRoles;
+	
+	@Description 	Summary of the workflow instance.
+	private Basetype Description[0..1] summary;
+
+	@Description	Earliest creation time.
+	private Basetype Timestamp[0..1] creationTimeFrom;
+	
+	@Description	Latest creation time.
+	private Basetype Timestamp[0..1] creationTimeTo;
+
+	@Description	Earliest modification time.
+	private Basetype Timestamp[0..1] modificationTimeFrom;
+	
+	@Description	Latest modification time.
+	private Basetype Timestamp[0..1] modificationTimeTo;
+
+	@Description	Earliest due date.
+	private Basetype Date[0..1] dueDateFrom;
+
+	@Description	Latest due date.
+	private Basetype Date[0..1] dueDateTo;
+
+	@Description	Workflow Definition search parameters (results are summarized).
+	private Datatype WorkflowDefinitionSearchParameter[0..*] definitionParameters;
+	
+	@CodePath		nabucco.workflow.functionaltype
+	@Description	Type of the task scenario.
+	private Datatype Code[0..1] functionaltype;
+	
+	@CodePath		nabucco.workflow.priority
+	@Description	Priority of the task scenario.
+	private Datatype Code[0..1] priority; 
+
+}
+

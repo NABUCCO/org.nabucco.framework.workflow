@@ -1,0 +1,71 @@
+/*
+ * Copyright 2010 PRODYNA AG
+ *
+ * Licensed under the Eclipse Public License (EPL), Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.opensource.org/licenses/eclipse-1.0.php or
+ * http://nabuccosource.org/License.html
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.nabucco.framework.workflow.facade.datatype.definition;
+
+import org.nabucco.framework.base.facade.datatype.Description;
+import org.nabucco.framework.base.facade.datatype.NabuccoDatatype;
+import org.nabucco.framework.base.facade.datatype.Name;
+import org.nabucco.framework.base.facade.datatype.Owner;
+import org.nabucco.framework.base.facade.datatype.workflow.transition.TransitionCommentType;
+import org.nabucco.framework.workflow.facade.datatype.definition.WorkflowState;
+import org.nabucco.framework.workflow.facade.datatype.definition.condition.WorkflowCondition;
+import org.nabucco.framework.workflow.facade.datatype.definition.effect.WorkflowEffect;
+import org.nabucco.framework.workflow.facade.datatype.definition.trigger.WorkflowTrigger;
+
+@Author			Frank Ratschinski
+@Company		PRODYNA AG
+@Date			2010-03-29
+@Description	A Transition in a workflow.
+public Datatype WorkflowTransition extends NabuccoDatatype {
+	
+	@Description	The name of the transition.
+	private Basetype Name[1] name;
+	
+	@Description	A brief description of the transition.
+	private Basetype Description[1] description;
+
+	@Description	The owner of the transition.
+	private Basetype Owner[1] owner;
+	
+	@Default		OPTIONAL
+	@Description	The cardinality of the comment of this transition.
+	private Enumeration TransitionCommentType[1] commentCardinality; 
+	
+	@FetchStrategy			EAGER
+	@AssociationStrategy	AGGREGATION
+	@Description	The source state of the transition.
+	private Datatype WorkflowState[1] source;
+	
+	@FetchStrategy			EAGER
+	@AssociationStrategy	AGGREGATION
+	@Description	The target state of the transition.
+	private Datatype WorkflowState[1] target;
+	
+	@AssociationStrategy	AGGREGATION
+	@FetchStrategy			EAGER
+	@Description	The trigger of the transition.
+	private Datatype WorkflowTrigger[1] trigger;
+	
+	@FetchStrategy			EAGER
+	@Description	The guarding condition of the transition.
+	private Datatype WorkflowCondition[0..1] condition;
+	
+	@FetchStrategy			EAGER
+	@Description	The list of effects of the transition.
+	private Datatype WorkflowEffect[0..*] effectList;
+	
+}

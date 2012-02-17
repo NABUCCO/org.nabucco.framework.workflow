@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="*.nbc" kind="src" output="out/ide/nbc" path="src/nbc"/>
+	<classpathentry kind="src" output="out/ide/test" path="src/test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.nabucco.framework.workflow.facade.component"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.nabucco.framework.workflow.facade.datatype"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.nabucco.framework.workflow.facade.exception"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.nabucco.framework.workflow.facade.service"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JBOSS"/>
+	<classpathentry kind="lib" path="lib/test/org.nabucco.framework.base.facade.jar" sourcepath="lib/source/org.nabucco.framework.base.facade.sources.zip"/>
+	<classpathentry kind="lib" path="lib/test/org.nabucco.framework.base.test.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.nabucco.framework.workflow.ui.portal"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.nabucco.framework.workflow.ui.rcp"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.nabucco.framework.workflow.ui.web"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.nabucco.framework.workflow.facade.message"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.nabucco.framework.workflow.impl.component"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.nabucco.framework.workflow.impl.service"/>
+	<classpathentry kind="lib" path="lib/test/org.nabucco.framework.common.authorization.facade.jar"/>
+	<classpathentry kind="output" path="out/ide"/>
+</classpath>

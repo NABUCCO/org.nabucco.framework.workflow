@@ -1,0 +1,69 @@
+/*
+ * Copyright 2011 PRODYNA AG
+ *
+ * Licensed under the Eclipse Public License (EPL), Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.opensource.org/licenses/eclipse-1.0.php or
+ * http://nabuccosource.org/License.html
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.nabucco.framework.workflow.facade.service.definition.produce;
+
+import org.nabucco.framework.base.facade.exception.service.ProduceException;
+import org.nabucco.framework.workflow.facade.message.definition.WorkflowConditionMsg;
+import org.nabucco.framework.workflow.facade.message.definition.WorkflowDefinitionMsg;
+import org.nabucco.framework.workflow.facade.message.definition.WorkflowEffectMsg;
+import org.nabucco.framework.workflow.facade.message.definition.WorkflowSignalMsg;
+import org.nabucco.framework.workflow.facade.message.definition.WorkflowStateMsg;
+import org.nabucco.framework.workflow.facade.message.definition.WorkflowTransitionMsg;
+import org.nabucco.framework.workflow.facade.message.definition.WorkflowTriggerMsg;
+import org.nabucco.framework.workflow.facade.message.definition.produce.ProduceWorkflowConditionRq;
+import org.nabucco.framework.workflow.facade.message.definition.produce.ProduceWorkflowEffectRq;
+import org.nabucco.framework.workflow.facade.message.definition.produce.ProduceWorkflowTriggerRq;
+
+@Author				Jens Wurm
+@Company			PRODYNA AG
+@Date				2010-04-28
+@Version			1.0
+@Description		Workflow definition produce service.
+public Service ProduceWorkflowDefinition {
+	
+	@ManualImplementation
+	@Description	Creates a new WorkflowDefinition.
+	public WorkflowDefinitionMsg produceWorkflowDefinition() throws ProduceException;
+		
+	@ManualImplementation
+	@Description	Creates a new WorkflowState.		
+	public WorkflowStateMsg produceWorkflowState() throws ProduceException;	
+		
+	@ManualImplementation
+	@Description	Creates a new WorkflowTransition.		
+	public WorkflowTransitionMsg produceWorkflowTransition() throws ProduceException;
+		
+	@ManualImplementation
+	@Description	Creates a new WorkflowSignal.		
+	public WorkflowSignalMsg produceWorkflowSignal() throws ProduceException;
+	
+	@ManualImplementation
+	@Description	Creates a new WorkflowTrigger for a given Trigger Type.		
+	public WorkflowTriggerMsg produceWorkflowTrigger(ProduceWorkflowTriggerRq rq) throws ProduceException;
+	
+	@ManualImplementation
+	@Description	Creates a new WorkflowCondition for a given Condition Type.		
+	public WorkflowConditionMsg produceWorkflowCondition(ProduceWorkflowConditionRq rq) throws ProduceException;
+	
+	@ManualImplementation
+	@Description	Creates a new WorkflowEffect for a given Effect Type.		
+	public WorkflowEffectMsg produceWorkflowEffect(ProduceWorkflowEffectRq rq) throws ProduceException;
+		
+}
+
+
+		

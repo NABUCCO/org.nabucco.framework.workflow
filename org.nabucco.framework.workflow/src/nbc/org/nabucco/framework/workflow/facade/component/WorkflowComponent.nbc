@@ -1,0 +1,170 @@
+/*
+ * Copyright 2010 PRODYNA AG
+ *
+ * Licensed under the Eclipse Public License (EPL), Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.opensource.org/licenses/eclipse-1.0.php or
+ * http://nabuccosource.org/License.html
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.nabucco.framework.workflow.facade.component;
+
+import org.nabucco.framework.workflow.facade.datatype.definition.WorkflowDefinition;
+import org.nabucco.framework.workflow.facade.datatype.definition.WorkflowState;
+import org.nabucco.framework.workflow.facade.datatype.definition.WorkflowStateConstraint;
+import org.nabucco.framework.workflow.facade.datatype.definition.WorkflowTransition;
+import org.nabucco.framework.workflow.facade.datatype.definition.condition.AssigneeCondition;
+import org.nabucco.framework.workflow.facade.datatype.definition.condition.BooleanCondition;
+import org.nabucco.framework.workflow.facade.datatype.definition.condition.GroupCondition;
+import org.nabucco.framework.workflow.facade.datatype.definition.condition.InstantiableCondition;
+import org.nabucco.framework.workflow.facade.datatype.definition.condition.PermissionCondition;
+import org.nabucco.framework.workflow.facade.datatype.definition.condition.PropertyCondition;
+import org.nabucco.framework.workflow.facade.datatype.definition.condition.RoleCondition;
+import org.nabucco.framework.workflow.facade.datatype.definition.condition.WorkflowCondition;
+import org.nabucco.framework.workflow.facade.datatype.definition.effect.WorkflowEffect;
+import org.nabucco.framework.workflow.facade.datatype.definition.effect.assignee.AssigneeEffect;
+import org.nabucco.framework.workflow.facade.datatype.definition.effect.constraint.DynamicConstraintEffect;
+import org.nabucco.framework.workflow.facade.datatype.definition.effect.context.ContextEffect;
+import org.nabucco.framework.workflow.facade.datatype.definition.effect.instantiable.InstantiableEffect;
+import org.nabucco.framework.workflow.facade.datatype.definition.effect.log.LogEffect;
+import org.nabucco.framework.workflow.facade.datatype.definition.effect.modification.ModificationEffect;
+import org.nabucco.framework.workflow.facade.datatype.definition.effect.script.ScriptEffect;
+import org.nabucco.framework.workflow.facade.datatype.definition.effect.subworkflow.SubWorkflowEffect;
+import org.nabucco.framework.workflow.facade.datatype.definition.signal.WorkflowSignal;
+import org.nabucco.framework.workflow.facade.datatype.definition.signal.WorkflowSignalContainer;
+import org.nabucco.framework.workflow.facade.datatype.definition.trigger.SignalTrigger;
+import org.nabucco.framework.workflow.facade.datatype.definition.trigger.TimeTrigger;
+import org.nabucco.framework.workflow.facade.datatype.definition.trigger.WorkflowTrigger;
+import org.nabucco.framework.workflow.facade.datatype.instance.WorkflowInstance;
+import org.nabucco.framework.workflow.facade.datatype.instance.WorkflowInstanceEntry;
+import org.nabucco.framework.workflow.facade.datatype.instance.context.WorkflowContext;
+import org.nabucco.framework.workflow.facade.service.definition.maintain.MaintainWorkflowDefinition;
+import org.nabucco.framework.workflow.facade.service.definition.produce.ProduceWorkflowDefinition;
+import org.nabucco.framework.workflow.facade.service.definition.resolve.ResolveWorkflowDefinition;
+import org.nabucco.framework.workflow.facade.service.definition.search.SearchWorkflowDefinition;
+import org.nabucco.framework.workflow.facade.service.engine.WorkflowEngineService;
+import org.nabucco.framework.workflow.facade.service.instance.maintain.MaintainWorkflowInstance;
+import org.nabucco.framework.workflow.facade.service.instance.produce.ProduceWorkflowInstance;
+import org.nabucco.framework.workflow.facade.service.instance.resolve.ResolveWorkflowInstance;
+import org.nabucco.framework.workflow.facade.service.instance.search.SearchWorkflowInstance;
+
+@Author				Nicolas Moser
+@Company			PRODYNA AG
+@Date				2010-02-18
+@Version			1.0
+@Description		Component for defining workflows.
+@ComponentPrefix	WORK
+public Component WorkflowComponent {
+	
+	
+	/* Persistent Workflow Datatypes */
+	
+	private persistent Datatype WorkflowDefinition[0..*] workflowDefinitionList;
+	
+	private persistent Datatype WorkflowState[0..*] workflowStateList;
+	
+	private persistent Datatype WorkflowStateConstraint[0..*] workflowConstraintList;
+	
+	private persistent Datatype WorkflowTransition[0..*] workflowTransitionList;
+
+	private persistent Datatype WorkflowSignalContainer[0..*] workflowSignalContainerList;
+	
+	private persistent Datatype WorkflowSignal[0..*] workflowSignalList;
+	
+	
+	/* Persistent Triggers */
+	
+	private persistent Datatype WorkflowTrigger[0..*] triggerList;
+	
+	private persistent Datatype SignalTrigger[0..*] signalTriggerList;
+	
+	private persistent Datatype TimeTrigger[0..*] timeTriggerList;
+	
+	
+	/* Persistent Conditions */
+	
+	private persistent Datatype WorkflowCondition[0..*] conditionList;
+	
+	private persistent Datatype AssigneeCondition[0..*] assigneeConditionList;
+	
+	private persistent Datatype PropertyCondition[0..*] propertyConditionList;
+	
+	private persistent Datatype GroupCondition[0..*] groupConditionList;
+	
+	private persistent Datatype RoleCondition[0..*] roleConditionList;
+	
+	private persistent Datatype PermissionCondition[0..*] permissionConditionList;
+	
+	private persistent Datatype InstantiableCondition[0..*] instantiableConditionList;
+	
+	private persistent Datatype BooleanCondition[0..*] booleanConditionList;
+	
+	
+	/* Persistent Effects */
+	
+	private persistent Datatype WorkflowEffect[0..*] effectList;
+	
+	private persistent Datatype ScriptEffect[0..*] scriptEffectList;
+	
+	private persistent Datatype AssigneeEffect[0..*] assigneeEffectList;
+	
+	private persistent Datatype ContextEffect[0..*] contextEffectList;
+	
+	private persistent Datatype LogEffect[0..*] logEffectList;   
+	
+	private persistent Datatype ModificationEffect[0..*] modificationEffectList;
+	
+	private persistent Datatype DynamicConstraintEffect[0..*] constraintEffectList;   
+	
+	private persistent Datatype InstantiableEffect[0..*] instantiableEffectList; 
+	
+	private persistent Datatype SubWorkflowEffect[0..*] subWorkflowEffectList;    
+	
+	
+	/* Persistent Workflow Instance */
+	
+	@Referenceable
+	private persistent Datatype WorkflowInstance[0..*] workflowInstanceList;
+	
+	private persistent Datatype WorkflowInstanceEntry[0..*] workflowEntryList;
+	
+	private persistent Datatype WorkflowContext[0..*] contextList;
+	
+	
+	/* Services */
+	
+	@Description	Maintains WorkflowDefinitions
+	public Service MaintainWorkflowDefinition;
+	
+	@Description	Searchs WorkflowDefinitions
+	public Service SearchWorkflowDefinition;
+	
+	@Description	Creates WorkflowDefinitions
+	public Service ProduceWorkflowDefinition;
+	
+	@Description	Resolves WorkflowDefinitions
+	public Service ResolveWorkflowDefinition;
+	
+	@Description	Maintains WorkflowInstances
+	public Service MaintainWorkflowInstance;
+	
+	@Description	Searchs WorkflowInstances
+	public Service SearchWorkflowInstance;
+	
+	@Description	Creates WorkflowInstances
+	public Service ProduceWorkflowInstance;
+	
+	@Description	Resolves WorkflowInstances
+	public Service ResolveWorkflowInstance;
+
+	@Description	The central workflow engine execution service.
+	public Service WorkflowEngineService;
+	
+}

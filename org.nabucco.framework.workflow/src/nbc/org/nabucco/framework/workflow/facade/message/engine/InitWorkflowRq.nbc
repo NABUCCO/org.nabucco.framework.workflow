@@ -1,0 +1,74 @@
+/*
+ * Copyright 2010 PRODYNA AG
+ *
+ * Licensed under the Eclipse Public License (EPL), Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.opensource.org/licenses/eclipse-1.0.php or
+ * http://nabuccosource.org/License.html
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.nabucco.framework.workflow.facade.message.engine;
+
+import org.nabucco.framework.base.facade.datatype.Description;
+import org.nabucco.framework.base.facade.datatype.Name;
+import org.nabucco.framework.base.facade.datatype.Owner;
+import org.nabucco.framework.base.facade.datatype.code.Code;
+import org.nabucco.framework.base.facade.datatype.date.Date;
+import org.nabucco.framework.base.facade.datatype.documentation.Comment;
+import org.nabucco.framework.base.facade.datatype.text.TextContent;
+import org.nabucco.framework.workflow.facade.datatype.definition.WorkflowDefinition;
+import org.nabucco.framework.workflow.facade.datatype.instance.context.WorkflowContext;
+
+@Author			Nicolas Moser
+@Company		PRODYNA AG
+@Date			2011-03-12
+@Version		1.0
+@Description	Request message for starting a new workflow.
+public Message InitWorkflowRq { 
+
+	@Description	The workflow definition to start a new instance for.
+	private Datatype WorkflowDefinition[1] workflow;
+	
+	@MinLength		1
+	@Description	The summary of the new workflow instance.
+	private Basetype Description[1] summary;
+
+	@Description	Owner of the new created workflow instance.
+	private Basetype Owner[0..1] owner;
+	
+	@Description	The description of the new workflow instance.
+	private Basetype TextContent[0..1] description;
+	
+	@Description	Context information for the initial state.
+	private Datatype WorkflowContext[0..1] context;
+
+	@Description	The assigned user.
+	private Basetype Name[0..1] assignedUser;
+	
+	@Description	The assigned group.
+	private Basetype Name[0..1] assignedGroup;
+	
+	@Description	The assigned role.
+	private Basetype Name[0..1] assignedRole;
+	
+	@CodePath		nabucco.workflow.functionaltype
+	@Description	Type of the task scenario.
+	private Datatype Code[1] functionalType;
+	
+	@CodePath		nabucco.workflow.priority
+	@Description	Priority of the task scenario.
+	private Datatype Code[0..1] priority;
+	
+	@Description	Due date of the instance. 
+	private Basetype Date[0..1] dueDate;
+	
+	@Description	An optional workflow execution comment.
+	private Basetype Comment[0..1] comment;
+}

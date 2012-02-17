@@ -1,0 +1,56 @@
+/*
+ * Copyright 2010 PRODYNA AG
+ *
+ * Licensed under the Eclipse Public License (EPL), Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.opensource.org/licenses/eclipse-1.0.php or
+ * http://nabuccosource.org/License.html
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.nabucco.framework.workflow.facade.datatype.definition;
+
+import org.nabucco.framework.base.facade.datatype.Description;
+import org.nabucco.framework.base.facade.datatype.NabuccoDatatype;
+import org.nabucco.framework.base.facade.datatype.Name;
+import org.nabucco.framework.base.facade.datatype.Owner;
+import org.nabucco.framework.workflow.facade.datatype.definition.WorkflowDefinitionType;
+import org.nabucco.framework.workflow.facade.datatype.definition.WorkflowState;
+import org.nabucco.framework.workflow.facade.datatype.definition.WorkflowTransition;
+import org.nabucco.framework.workflow.facade.datatype.definition.signal.WorkflowSignalContainer;
+
+@Author			Nicolas Moser
+@Company		PRODYNA AG
+@Date			2010-03-29
+@Description	Template of a Workflow defines states and transitions
+public Datatype WorkflowDefinition extends NabuccoDatatype {
+
+	@Description			The name of the workflow definition.
+	private Basetype Name[1] name;
+	
+	@Description			A brief description of the workflow.
+	private Basetype Description[1] description;
+
+	@Description			The owner of the workflow definition.
+	private Basetype Owner[1] owner;
+	
+	@Description			The type of the workflow.
+	private Enumeration WorkflowDefinitionType[1] workflowType;
+	
+	@Description			The list of states contained by the workflow.
+	private Datatype WorkflowState[0..*] stateList;
+	
+	@Description			The list of all transitions contained by the workflow.
+	private Datatype WorkflowTransition[0..*] transitionList;
+	
+	@Description			The list of available signals of this workflow.
+	private Datatype WorkflowSignalContainer[0..*] signalList;
+	
+}
+

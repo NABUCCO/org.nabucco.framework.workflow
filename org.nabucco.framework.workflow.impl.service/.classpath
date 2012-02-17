@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="out/ide/main/gen" path="src/main/gen"/>
+	<classpathentry kind="src" output="out/ide/main/man" path="src/main/man"/>
+	<classpathentry kind="src" output="out/ide/test/gen" path="src/test/gen"/>
+	<classpathentry kind="src" output="out/ide/test/man" path="src/test/man"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.nabucco.framework.workflow.facade.datatype"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.nabucco.framework.workflow.facade.exception"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.nabucco.framework.workflow.facade.message"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.nabucco.framework.workflow.facade.service"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.nabucco.framework.workflow.facade.component"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="/org.nabucco.framework.workflow/lib/impl/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="/org.nabucco.framework.workflow/lib/impl/jboss-javaee.jar"/>
+	<classpathentry kind="lib" path="/org.nabucco.framework.workflow/lib/impl/log4j.jar"/>
+	<classpathentry kind="lib" path="/org.nabucco.framework.workflow/lib/impl/org.nabucco.framework.base.facade.jar"/>
+	<classpathentry kind="lib" path="/org.nabucco.framework.workflow/lib/impl/org.nabucco.framework.base.impl.jar" sourcepath="/org.nabucco.framework.workflow/lib/source/org.nabucco.framework.base.impl.sources.zip"/>
+	<classpathentry kind="lib" path="/org.nabucco.framework.workflow/lib/impl/org.nabucco.common.extension.jar"/>
+	<classpathentry kind="lib" path="/org.nabucco.framework.workflow/lib/impl/org.nabucco.framework.common.dynamiccode.facade.jar"/>
+	<classpathentry kind="lib" path="/org.nabucco.framework.workflow/lib/impl/org.nabucco.framework.support.scripting.facade.jar"/>
+	<classpathentry kind="lib" path="/org.nabucco.framework.workflow/lib/impl/org.nabucco.common.cache.jar"/>
+	<classpathentry kind="lib" path="/org.nabucco.framework.workflow/lib/impl/org.nabucco.framework.common.authorization.facade.jar"/>
+	<classpathentry kind="output" path="out"/>
+</classpath>

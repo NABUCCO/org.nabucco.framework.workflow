@@ -1,0 +1,56 @@
+/*
+ * Copyright 2010 PRODYNA AG
+ *
+ * Licensed under the Eclipse Public License (EPL), Version 1.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.opensource.org/licenses/eclipse-1.0.php or
+ * http://nabuccosource.org/License.html
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.nabucco.framework.workflow.facade.datatype.definition.effect.constraint;
+
+import org.nabucco.framework.base.facade.datatype.Flag;
+import org.nabucco.framework.base.facade.datatype.Name;
+import org.nabucco.framework.base.facade.datatype.Number;
+import org.nabucco.framework.workflow.facade.datatype.definition.effect.WorkflowEffect;
+import org.nabucco.framework.workflow.facade.datatype.definition.effect.WorkflowEffectType;
+
+@Author			Nicolas Moser
+@Company		PRODYNA AG
+@Date			2011-03-18
+@Description	Add Dynamic Constraints to the referenced datatype.
+public Datatype DynamicConstraintEffect extends WorkflowEffect {
+	
+	@Redefined
+	@Default 		CONSTRAINT
+	protected Enumeration WorkflowEffectType[1] effectType;
+
+	@Description	Name of the property to add the constraint to.
+	private Basetype Name[0..1] propertyName;
+	
+	@Description	Whether the property should be editable or not.
+	private Basetype Flag[0..1] editable;
+	
+	@Description	Whether the property should be visible or not.
+	private Basetype Flag[0..1] visible;
+	
+	@Description	The new property min length.
+	private Basetype Number[0..1] minLength;
+	
+	@Description	The new property max length.
+	private Basetype Number[0..1] maxLength;
+	  
+	@Description	The new property max multiplicity.
+	private Basetype Number[0..1] minMultiplicity;
+	  
+	@Description	The new property max multiplicity.
+	private Basetype Number[0..1] maxMultiplicity;
+	
+}
