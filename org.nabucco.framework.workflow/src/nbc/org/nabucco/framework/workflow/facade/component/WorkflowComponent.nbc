@@ -45,6 +45,11 @@ import org.nabucco.framework.workflow.facade.datatype.definition.trigger.Workflo
 import org.nabucco.framework.workflow.facade.datatype.instance.WorkflowInstance;
 import org.nabucco.framework.workflow.facade.datatype.instance.WorkflowInstanceEntry;
 import org.nabucco.framework.workflow.facade.datatype.instance.context.WorkflowContext;
+import org.nabucco.framework.workflow.facade.datatype.task.TaskItem;
+import org.nabucco.framework.workflow.facade.service.datatype.maintain.MaintainWorkflowDatatype;
+import org.nabucco.framework.workflow.facade.service.datatype.produce.ProduceWorkflowDatatype;
+import org.nabucco.framework.workflow.facade.service.datatype.resolve.ResolveWorkflowDatatype;
+import org.nabucco.framework.workflow.facade.service.datatype.search.SearchWorkflowDatatype;
 import org.nabucco.framework.workflow.facade.service.definition.maintain.MaintainWorkflowDefinition;
 import org.nabucco.framework.workflow.facade.service.definition.produce.ProduceWorkflowDefinition;
 import org.nabucco.framework.workflow.facade.service.definition.resolve.ResolveWorkflowDefinition;
@@ -137,6 +142,10 @@ public Component WorkflowComponent {
 	
 	private persistent Datatype WorkflowContext[0..*] contextList;
 	
+	/* Persistent Tasks */
+	@Referenceable
+	private persistent Datatype TaskItem[0..*] taskItemList;
+	
 	
 	/* Services */
 	
@@ -167,4 +176,15 @@ public Component WorkflowComponent {
 	@Description	The central workflow engine execution service.
 	public Service WorkflowEngineService;
 	
+	@Description	Search service for the workflow avaliable datatypes (Tasks etc..)
+	public Service SearchWorkflowDatatype;
+	
+	@Description	Resolve service for the workflow avaliable datatypes (Tasks etc..)
+	public Service ResolveWorkflowDatatype;
+	
+	@Description	Produce service for the workflow avaliable datatypes (Tasks etc..)
+	public Service ProduceWorkflowDatatype;
+	
+	@Description	Maintain service for the workflow avaliable datatypes (Tasks etc..)
+	public Service MaintainWorkflowDatatype;
 }

@@ -1,18 +1,16 @@
 /*
  * Copyright 2012 PRODYNA AG
- *
- * Licensed under the Eclipse Public License (EPL), Version 1.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
+ * 
+ * Licensed under the Eclipse Public License (EPL), Version 1.0 (the "License"); you may not use
+ * this file except in compliance with the License. You may obtain a copy of the License at
+ * 
  * http://www.opensource.org/licenses/eclipse-1.0.php or
  * http://www.nabucco.org/License.html
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
  */
 package org.nabucco.framework.workflow.impl.component;
 
@@ -25,6 +23,10 @@ import org.nabucco.framework.base.facade.service.queryfilter.QueryFilterService;
 import org.nabucco.framework.base.impl.component.ComponentSupport;
 import org.nabucco.framework.workflow.facade.component.WorkflowComponentLocal;
 import org.nabucco.framework.workflow.facade.component.WorkflowComponentRemote;
+import org.nabucco.framework.workflow.facade.service.datatype.maintain.MaintainWorkflowDatatype;
+import org.nabucco.framework.workflow.facade.service.datatype.produce.ProduceWorkflowDatatype;
+import org.nabucco.framework.workflow.facade.service.datatype.resolve.ResolveWorkflowDatatype;
+import org.nabucco.framework.workflow.facade.service.datatype.search.SearchWorkflowDatatype;
 import org.nabucco.framework.workflow.facade.service.definition.maintain.MaintainWorkflowDefinition;
 import org.nabucco.framework.workflow.facade.service.definition.produce.ProduceWorkflowDefinition;
 import org.nabucco.framework.workflow.facade.service.definition.resolve.ResolveWorkflowDefinition;
@@ -219,5 +221,47 @@ public class WorkflowComponentImpl extends ComponentSupport implements WorkflowC
     @Override
     public WorkflowEngineService getWorkflowEngineService() throws ServiceException {
         return super.lookup(WorkflowComponentJndiNames.WORKFLOW_ENGINE_SERVICE_REMOTE, WorkflowEngineService.class);
+    }
+
+    @Override
+    public SearchWorkflowDatatype getSearchWorkflowDatatypeLocal() throws ServiceException {
+        return super.lookup(WorkflowComponentJndiNames.SEARCH_WORKFLOW_DATATYPE_LOCAL, SearchWorkflowDatatype.class);
+    }
+
+    @Override
+    public SearchWorkflowDatatype getSearchWorkflowDatatype() throws ServiceException {
+        return super.lookup(WorkflowComponentJndiNames.SEARCH_WORKFLOW_DATATYPE_REMOTE, SearchWorkflowDatatype.class);
+    }
+
+    @Override
+    public ResolveWorkflowDatatype getResolveWorkflowDatatypeLocal() throws ServiceException {
+        return super.lookup(WorkflowComponentJndiNames.RESOLVE_WORKFLOW_DATATYPE_LOCAL, ResolveWorkflowDatatype.class);
+    }
+
+    @Override
+    public ResolveWorkflowDatatype getResolveWorkflowDatatype() throws ServiceException {
+        return super.lookup(WorkflowComponentJndiNames.RESOLVE_WORKFLOW_DATATYPE_REMOTE, ResolveWorkflowDatatype.class);
+    }
+
+    @Override
+    public ProduceWorkflowDatatype getProduceWorkflowDatatypeLocal() throws ServiceException {
+        return super.lookup(WorkflowComponentJndiNames.PRODUCE_WORKFLOW_DATATYPE_LOCAL, ProduceWorkflowDatatype.class);
+    }
+
+    @Override
+    public ProduceWorkflowDatatype getProduceWorkflowDatatype() throws ServiceException {
+        return super.lookup(WorkflowComponentJndiNames.PRODUCE_WORKFLOW_DATATYPE_REMOTE, ProduceWorkflowDatatype.class);
+    }
+
+    @Override
+    public MaintainWorkflowDatatype getMaintainWorkflowDatatypeLocal() throws ServiceException {
+        return super
+                .lookup(WorkflowComponentJndiNames.MAINTAIN_WORKFLOW_DATATYPE_LOCAL, MaintainWorkflowDatatype.class);
+    }
+
+    @Override
+    public MaintainWorkflowDatatype getMaintainWorkflowDatatype() throws ServiceException {
+        return super.lookup(WorkflowComponentJndiNames.MAINTAIN_WORKFLOW_DATATYPE_REMOTE,
+                MaintainWorkflowDatatype.class);
     }
 }

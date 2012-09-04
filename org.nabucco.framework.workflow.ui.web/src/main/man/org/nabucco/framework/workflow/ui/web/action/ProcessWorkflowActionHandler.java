@@ -20,7 +20,9 @@ import org.nabucco.framework.base.facade.datatype.workflow.transition.Transition
 import org.nabucco.framework.base.facade.exception.client.ClientException;
 import org.nabucco.framework.base.ui.web.action.WebActionHandlerSupport;
 import org.nabucco.framework.base.ui.web.action.parameter.WebActionParameter;
+import org.nabucco.framework.base.ui.web.action.result.RefreshItem;
 import org.nabucco.framework.base.ui.web.action.result.WebActionResult;
+import org.nabucco.framework.base.ui.web.component.WebElementType;
 import org.nabucco.framework.base.ui.web.component.dialog.Dialog;
 import org.nabucco.framework.base.ui.web.component.dialog.DialogType;
 import org.nabucco.framework.base.ui.web.component.work.WorkItemWorkflow;
@@ -73,6 +75,8 @@ public class ProcessWorkflowActionHandler extends WebActionHandlerSupport {
         WebActionResult result = new WebActionResult();
         WebActionResult subResult = super.executeAction(actionId, parameter);
         result.addResult(subResult);
+
+        result.addItem(new RefreshItem(WebElementType.EDITOR, editorId));
         return result;
     }
 
@@ -92,10 +96,10 @@ public class ProcessWorkflowActionHandler extends WebActionHandlerSupport {
         if (id == null) {
             return;
         }
-        
+
         Dialog dialog = NabuccoServletUtil.getDialog(id);
 
-        if (dialog.getDialogType() != DialogType.GRID) {
+        if (dialog.getDialogType() != DialogType.GRIDDIALOG) {
             return;
         }
 

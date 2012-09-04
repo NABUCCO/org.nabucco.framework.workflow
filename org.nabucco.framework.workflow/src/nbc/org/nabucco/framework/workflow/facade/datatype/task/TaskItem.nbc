@@ -1,0 +1,37 @@
+/*
+* Copyright 2010 PRODYNA AG
+*
+* Licensed under the Eclipse Public License (EPL), Version 1.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.opensource.org/licenses/eclipse-1.0.php or
+* http://nabuccosource.org/License.html
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+package org.nabucco.framework.workflow.facade.datatype.task;
+
+import org.nabucco.framework.base.facade.datatype.workflow.task.Task;
+import org.nabucco.framework.workflow.facade.datatype.instance.WorkflowInstance;
+import org.nabucco.framework.workflow.facade.datatype.task.TaskItemStatus;
+
+@Author			Leonid Agranovskiy
+@Company		PRODYNA AG
+@Date			2011-02-08
+@Description	The task that can be 
+public Datatype TaskItem extends Task {
+	
+	@FetchStrategy		EAGER
+	@Description 		The workflow instance to for the task
+	private Datatype WorkflowInstance[0..1] workflow;
+	
+	@Default			CREATED
+	@Description		The status of the task item
+	private Enumeration TaskItemStatus[1] status; 
+}
+

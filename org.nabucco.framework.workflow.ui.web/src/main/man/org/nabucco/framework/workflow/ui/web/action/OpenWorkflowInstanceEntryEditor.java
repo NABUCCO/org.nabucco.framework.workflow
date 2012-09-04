@@ -16,20 +16,19 @@
  */
 package org.nabucco.framework.workflow.ui.web.action;
 
-import java.util.Set;
+import java.util.List;
 
 import org.nabucco.framework.base.facade.datatype.Datatype;
 import org.nabucco.framework.base.facade.datatype.collection.NabuccoList;
-import org.nabucco.framework.base.facade.datatype.componentrelation.ComponentRelation;
-import org.nabucco.framework.base.facade.datatype.property.ComponentRelationProperty;
-import org.nabucco.framework.base.facade.datatype.property.NabuccoProperty;
-import org.nabucco.framework.base.facade.datatype.property.NabuccoPropertyType;
+import org.nabucco.framework.base.facade.datatype.visitor.VisitorException;
+import org.nabucco.framework.base.facade.datatype.workflow.instance.Instance;
 import org.nabucco.framework.base.facade.exception.client.ClientException;
 import org.nabucco.framework.base.ui.web.action.handler.OpenEditorActionHandler;
 import org.nabucco.framework.base.ui.web.action.parameter.WebActionParameter;
 import org.nabucco.framework.base.ui.web.component.WebElementType;
 import org.nabucco.framework.base.ui.web.component.work.WorkItem;
 import org.nabucco.framework.base.ui.web.component.work.editor.EditorItem;
+import org.nabucco.framework.base.ui.web.model.work.workflow.WorkflowInstanceReferenceVisitor;
 import org.nabucco.framework.base.ui.web.servlet.util.NabuccoServletUtil;
 import org.nabucco.framework.workflow.facade.datatype.instance.WorkflowInstance;
 import org.nabucco.framework.workflow.facade.datatype.instance.WorkflowInstanceEntry;
@@ -44,7 +43,7 @@ public class OpenWorkflowInstanceEntryEditor extends OpenEditorActionHandler<Wor
     private static final String EDITOR_ID = "WorkflowEntryEditor";
 
     @Override
-    protected String getEditorId(WebActionParameter arg0) throws ClientException {
+    protected String getEditorId(WebActionParameter arg0, WorkflowInstanceEntry datatype) throws ClientException {
         return EDITOR_ID;
     }
 
@@ -66,32 +65,33 @@ public class OpenWorkflowInstanceEntryEditor extends OpenEditorActionHandler<Wor
 
         Datatype datatype = editor.getModel().getDatatype();
 
-        Set<NabuccoProperty> properties = datatype.getProperties();
+        WorkflowInstanceReferenceVisitor visitor = new WorkflowInstanceReferenceVisitor();
+        try {
+            datatype.accept(visitor);
+        } catch (VisitorException e) {
+            throw new ClientException("Cannot visit datatype", e);
+        }
 
-        for (NabuccoProperty property : properties) {
-            if (property.getPropertyType() == NabuccoPropertyType.COMPONENT_RELATION) {
+        List<Instance> visitedWorkflows = visitor.getVisitedWorkflows();
 
-                ComponentRelationProperty componentRelationProperty = (ComponentRelationProperty) property;
+        if (visitedWorkflows.isEmpty()) {
+            throw new ClientException("No Workflows are bound on the given datatype.");
+        }
 
-                if (componentRelationProperty.getComponentRelationType().getTarget() == WorkflowInstance.class) {
-                    ComponentRelation<?> relation = componentRelationProperty.getInstance().first();
-                    if (relation != null) {
-                        WorkflowInstance workflowInstance = (WorkflowInstance) relation.getTarget();
-                        NabuccoList<WorkflowInstanceEntry> entries = workflowInstance.getEntryList();
+        for (Instance instance : visitedWorkflows) {
+            WorkflowInstance workflowInstance = (WorkflowInstance) instance;
 
-                        for (WorkflowInstanceEntry entry : entries) {
-                            if (entry.getId().equals(id)) {
-                                retVal = entry;
-                                break;
-                            }
-                        }
-                    }
+            NabuccoList<WorkflowInstanceEntry> entries = workflowInstance.getEntryList();
 
-                }
-
-                if (retVal != null) {
+            for (WorkflowInstanceEntry entry : entries) {
+                if (entry.getId().equals(id)) {
+                    retVal = entry;
                     break;
                 }
+            }
+
+            if (retVal != null) {
+                break;
             }
         }
 

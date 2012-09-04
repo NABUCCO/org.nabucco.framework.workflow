@@ -30,6 +30,8 @@ public Service ResolveWorkflowInstance  {
 
 	@Description 			Resolves a single workflow instance.
 	@ManualImplementation
+	@JoinPoint				org.nabucco.aspect.relating
+	@JoinPoint				org.nabucco.aspect.resolving
 	public WorkflowInstanceMsg resolveWorkflowInstance(WorkflowInstanceMsg wdsMsg) throws ResolveException;
 
 }

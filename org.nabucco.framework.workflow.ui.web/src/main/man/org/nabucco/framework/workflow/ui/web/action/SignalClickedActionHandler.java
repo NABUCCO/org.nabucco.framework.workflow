@@ -16,7 +16,6 @@
  */
 package org.nabucco.framework.workflow.ui.web.action;
 
-import org.nabucco.framework.base.facade.datatype.Name;
 import org.nabucco.framework.base.facade.datatype.workflow.transition.TransitionCommentType;
 import org.nabucco.framework.base.facade.datatype.workflow.transition.TransitionContext;
 import org.nabucco.framework.base.facade.datatype.workflow.transition.TransitionParameter;
@@ -64,13 +63,13 @@ public class SignalClickedActionHandler extends WebActionHandlerSupport {
         WorkflowModel model = editor.getWorkflow().getModel();
 
         String workflowId = parameter.get(NabuccoServletPathType.WORKFLOW);
-        String workflowSignalName = parameter.get(NabuccoServletPathType.SIGNAL);
+        String sentSignalId = parameter.get(NabuccoServletPathType.SIGNAL);
 
         if (workflowId == null || workflowId.isEmpty()) {
             throw new ClientException("The workflow operation cannot process. Workflow ID is not defined.");
         }
 
-        if (workflowSignalName == null || workflowSignalName.isEmpty()) {
+        if (sentSignalId == null || sentSignalId.isEmpty()) {
             throw new ClientException("The workflow operation cannot process. Workflow Signal is not defined.");
         }
 
@@ -85,8 +84,9 @@ public class SignalClickedActionHandler extends WebActionHandlerSupport {
         TransitionParameter workflowTransition = null;
 
         for (TransitionParameter transitionParamter : transitionContext.getNextTransitions()) {
-            Name signalName = transitionParamter.getSignal().getName();
-            if (signalName.getValueAsString().equals(workflowSignalName)) {
+            long signalId = transitionParamter.getSignal().getId();
+            long sentId = Long.parseLong(sentSignalId);
+            if (signalId == sentId) {
                 workflowTransition = transitionParamter;
                 break;
             }
@@ -103,11 +103,11 @@ public class SignalClickedActionHandler extends WebActionHandlerSupport {
 
         switch (cardinality) {
         case MANDATORY: {
-            dialogId = this.MANDATORY_DIALOG_ID;
+            dialogId = MANDATORY_DIALOG_ID;
             break;
         }
         case OPTIONAL: {
-            dialogId = this.OPTIONAL_DIALOG_ID;
+            dialogId = OPTIONAL_DIALOG_ID;
             break;
         }
         case NONE: {
@@ -121,7 +121,7 @@ public class SignalClickedActionHandler extends WebActionHandlerSupport {
             Dialog dialog = NabuccoServletUtil.getDialogController().createDialog(dialogId);
             dialog.getModel().addParameter(NabuccoServletPathType.EDITOR, editor.getInstanceId());
             dialog.getModel().addParameter(NabuccoServletPathType.WORKFLOW, workflowId);
-            dialog.getModel().addParameter(NabuccoServletPathType.SIGNAL, workflowSignalName);
+            dialog.getModel().addParameter(NabuccoServletPathType.SIGNAL, sentSignalId);
             retVal.addItem(new OpenItem(WebElementType.DIALOG, dialog.getInstanceId()));
         }
 

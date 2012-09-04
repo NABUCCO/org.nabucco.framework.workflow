@@ -17,7 +17,9 @@
 package org.nabucco.framework.workflow.impl.service.engine.util.effect;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.nabucco.framework.base.facade.datatype.NabuccoDatatype;
@@ -182,13 +184,13 @@ public class EffectExecutor {
         try {
 
             if (effect.getNewGroup() != null) {
-                this.instance.setAssignedGroup(effect.getNewGroup());
+                instance.setAssignedGroup(effect.getNewGroup());
             }
             if (effect.getNewUser() != null) {
-                this.instance.setAssignedUser(effect.getNewUser());
+                instance.setAssignedUser(effect.getNewUser());
             }
             if (effect.getNewRole() != null) {
-                this.instance.setAssignedRole(effect.getNewRole());
+                instance.setAssignedRole(effect.getNewRole());
             }
         } catch (Exception e) {
             logger.error(e, "Error setting workflow instance assignee.");
@@ -206,20 +208,24 @@ public class EffectExecutor {
      *             when the dynamic constraints cannot be set successfully
      */
     private void execute(DynamicConstraintEffect effect) throws EffectExecutionException {
-        if (this.instance.getContext() == null || this.instance.getContext().getDatatype() == null) {
+        if (context == null || context.getDatatype() == null) {
             logger.warning("Cannot set dynamic constraints on datatype [null].");
             return;
         }
 
-        NabuccoDatatype datatype = this.instance.getContext().getDatatype();
-        Name propertyName = this.instance.getContext().getPropertyName();
+        NabuccoDatatype datatype = context.getDatatype();
+        Name propertyName = effect.getPropertyName();
 
         ConstraintFactory factory = ConstraintFactory.getInstance();
+
+        List<Constraint> constraintList = new ArrayList<Constraint>();
 
         Constraint constraint = null;
 
         if (effect.getEditable() != null && effect.getEditable().getValue() != null) {
             constraint = factory.createEditableConstraint(effect.getEditable().getValue());
+
+            constraintList.add(constraint);
         }
 
         if (effect.getVisible() != null && effect.getVisible().getValue() != null) {
@@ -228,9 +234,26 @@ public class EffectExecutor {
             } else {
                 constraint = factory.createVisibilityConstraint(VisibilityType.INVISIBLE);
             }
+            constraintList.add(constraint);
         }
 
-        if (constraint == null) {
+        if (effect.getMinLength() != null && effect.getMaxLength() != null) {
+            int min = effect.getMinLength().getValue();
+            int max = effect.getMaxLength().getValue();
+
+            constraint = factory.createLengthConstraint(min, max);
+            constraintList.add(constraint);
+        }
+
+        if (effect.getMinMultiplicity() != null && effect.getMaxMultiplicity() != null) {
+            int min = effect.getMinMultiplicity().getValue();
+            int max = effect.getMaxMultiplicity().getValue();
+
+            constraint = factory.createMultiplicityConstraint(min, max);
+            constraintList.add(constraint);
+        }
+
+        if (constraintList.isEmpty()) {
             logger.debug("No dynamic constraints defined for dynamic constraint effect with id '",
                     String.valueOf(effect.getId()), "'.");
             return;
@@ -238,10 +261,14 @@ public class EffectExecutor {
 
         try {
 
-            if (propertyName == null || propertyName.getValue() == null) {
-                datatype.addConstraint(constraint, true);
-            } else {
-                datatype.addConstraint(datatype.getProperty(propertyName.getValue()), constraint);
+            for (Constraint newconst : constraintList) {
+
+                if (propertyName == null || propertyName.getValue() == null) {
+                    datatype.addConstraint(newconst, true);
+                } else {
+                    datatype.addConstraint(datatype.getProperty(propertyName.getValue()), newconst);
+                }
+
             }
 
         } catch (VisitorException ve) {
@@ -282,7 +309,7 @@ public class EffectExecutor {
 
             Instantiable instance = (Instantiable) instantiable.newInstance();
 
-            InstantiationContext context = new InstantiationContext(this.instance, this.context, this.serviceContext);
+            InstantiationContext context = new InstantiationContext(this.instance, this.context, serviceContext);
             instance.execute(context);
 
         } catch (ClassNotFoundException cnfe) {
@@ -334,7 +361,7 @@ public class EffectExecutor {
         Name definitionName = effect.getDefinitionName();
 
         try {
-            ServiceRequest<InitWorkflowRq> initRq = new ServiceRequest<InitWorkflowRq>(this.serviceContext);
+            ServiceRequest<InitWorkflowRq> initRq = new ServiceRequest<InitWorkflowRq>(serviceContext);
 
             InitWorkflowRq msg = new InitWorkflowRq();
             msg.setWorkflowName(definitionName);
@@ -342,7 +369,7 @@ public class EffectExecutor {
             msg.setAssignedGroup(effect.getAssignedGroup());
             msg.setAssignedUser(effect.getAssignedUser());
             msg.setAssignedRole(effect.getAssignedRole());
-            msg.setComment(new Comment("Sub Workflow of " + this.instance.getName()));
+            msg.setComment(new Comment("Sub Workflow of " + instance.getName()));
 
             if (effect.getDescription() != null && effect.getDescription().getValue() != null) {
                 msg.setDescription(new TextContent(effect.getDescription().getValue()));
@@ -363,7 +390,7 @@ public class EffectExecutor {
 
             Instance subInstance = rs.getResponseMessage().getInstance();
             if (subInstance instanceof WorkflowInstance) {
-                this.instance.getSubInstances().add((WorkflowInstance) subInstance);
+                instance.getSubInstances().add((WorkflowInstance) subInstance);
             }
 
         } catch (WorkflowException we) {
@@ -389,26 +416,26 @@ public class EffectExecutor {
             if (logParameters == null) {
                 logParameters = new HashMap<String, Serializable>();
 
-                logParameters.put(PARAM_INSTANCE, this.instance.getName());
-                logParameters.put(PARAM_INSTANCEID, this.instance.getId());
+                logParameters.put(PARAM_INSTANCE, instance.getName());
+                logParameters.put(PARAM_INSTANCEID, instance.getId());
 
-                logParameters.put(PARAM_CREATOR, this.instance.getCreator());
-                logParameters.put(PARAM_CREATIONDATE, this.instance.getCreationTime());
-                logParameters.put(PARAM_MODIFIER, this.instance.getCurrentEntry().getModifier());
-                logParameters.put(PARAM_MODIFICATIONDATE, this.instance.getCurrentEntry().getModificationTime());
+                logParameters.put(PARAM_CREATOR, instance.getCreator());
+                logParameters.put(PARAM_CREATIONDATE, instance.getCreationTime());
+                logParameters.put(PARAM_MODIFIER, instance.getCurrentEntry().getModifier());
+                logParameters.put(PARAM_MODIFICATIONDATE, instance.getCurrentEntry().getModificationTime());
 
-                logParameters.put(PARAM_ASSIGNEDUSER, this.instance.getAssignedUser());
-                logParameters.put(PARAM_ASSIGNEDGROUP, this.instance.getAssignedGroup());
-                logParameters.put(PARAM_ASSIGNEDROLE, this.instance.getAssignedRole());
+                logParameters.put(PARAM_ASSIGNEDUSER, instance.getAssignedUser());
+                logParameters.put(PARAM_ASSIGNEDGROUP, instance.getAssignedGroup());
+                logParameters.put(PARAM_ASSIGNEDROLE, instance.getAssignedRole());
 
-                logParameters.put(PARAM_DUEDATE, this.instance.getDueDate());
+                logParameters.put(PARAM_DUEDATE, instance.getDueDate());
 
-                logParameters.put(PARAM_WORKFLOW, this.instance.getDefinition().getName());
+                logParameters.put(PARAM_WORKFLOW, instance.getDefinition().getName());
 
-                logParameters.put(PARAM_TRANSITION, this.transition.getName());
-                logParameters.put(PARAM_TRIGGER, this.transition.getTrigger().getName());
-                logParameters.put(PARAM_SOURCE, this.transition.getSource().getName());
-                logParameters.put(PARAM_TARGET, this.transition.getTarget().getName());
+                logParameters.put(PARAM_TRANSITION, transition.getName());
+                logParameters.put(PARAM_TRIGGER, transition.getTrigger().getName());
+                logParameters.put(PARAM_SOURCE, transition.getSource().getName());
+                logParameters.put(PARAM_TARGET, transition.getTarget().getName());
             }
         }
 

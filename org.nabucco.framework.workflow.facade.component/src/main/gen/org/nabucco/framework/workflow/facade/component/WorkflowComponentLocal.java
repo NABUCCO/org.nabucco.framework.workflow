@@ -1,24 +1,26 @@
 /*
  * Copyright 2012 PRODYNA AG
- *
- * Licensed under the Eclipse Public License (EPL), Version 1.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
+ * 
+ * Licensed under the Eclipse Public License (EPL), Version 1.0 (the "License"); you may not use
+ * this file except in compliance with the License. You may obtain a copy of the License at
+ * 
  * http://www.opensource.org/licenses/eclipse-1.0.php or
  * http://www.nabucco.org/License.html
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
  */
 package org.nabucco.framework.workflow.facade.component;
 
 import org.nabucco.framework.base.facade.exception.service.ServiceException;
 import org.nabucco.framework.base.facade.service.componentrelation.ComponentRelationService;
 import org.nabucco.framework.base.facade.service.queryfilter.QueryFilterService;
+import org.nabucco.framework.workflow.facade.service.datatype.maintain.MaintainWorkflowDatatype;
+import org.nabucco.framework.workflow.facade.service.datatype.produce.ProduceWorkflowDatatype;
+import org.nabucco.framework.workflow.facade.service.datatype.resolve.ResolveWorkflowDatatype;
+import org.nabucco.framework.workflow.facade.service.datatype.search.SearchWorkflowDatatype;
 import org.nabucco.framework.workflow.facade.service.definition.maintain.MaintainWorkflowDefinition;
 import org.nabucco.framework.workflow.facade.service.definition.produce.ProduceWorkflowDefinition;
 import org.nabucco.framework.workflow.facade.service.definition.resolve.ResolveWorkflowDefinition;
@@ -124,4 +126,36 @@ public interface WorkflowComponentLocal extends WorkflowComponent {
      * @throws ServiceException
      */
     WorkflowEngineService getWorkflowEngineServiceLocal() throws ServiceException;
+
+    /**
+     * Getter for the SearchWorkflowDatatypeLocal.
+     *
+     * @return the SearchWorkflowDatatype.
+     * @throws ServiceException
+     */
+    SearchWorkflowDatatype getSearchWorkflowDatatypeLocal() throws ServiceException;
+
+    /**
+     * Getter for the ResolveWorkflowDatatypeLocal.
+     *
+     * @return the ResolveWorkflowDatatype.
+     * @throws ServiceException
+     */
+    ResolveWorkflowDatatype getResolveWorkflowDatatypeLocal() throws ServiceException;
+
+    /**
+     * Getter for the ProduceWorkflowDatatypeLocal.
+     *
+     * @return the ProduceWorkflowDatatype.
+     * @throws ServiceException
+     */
+    ProduceWorkflowDatatype getProduceWorkflowDatatypeLocal() throws ServiceException;
+
+    /**
+     * Getter for the MaintainWorkflowDatatypeLocal.
+     *
+     * @return the MaintainWorkflowDatatype.
+     * @throws ServiceException
+     */
+    MaintainWorkflowDatatype getMaintainWorkflowDatatypeLocal() throws ServiceException;
 }

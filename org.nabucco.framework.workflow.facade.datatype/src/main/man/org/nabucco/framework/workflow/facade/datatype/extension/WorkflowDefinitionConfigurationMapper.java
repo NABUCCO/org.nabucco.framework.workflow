@@ -25,6 +25,7 @@ import org.nabucco.framework.base.facade.datatype.extension.schema.workflow.Work
 import org.nabucco.framework.base.facade.datatype.extension.schema.workflow.WorkflowStateExtension;
 import org.nabucco.framework.base.facade.datatype.extension.schema.workflow.WorkflowTransitionExtension;
 import org.nabucco.framework.base.facade.datatype.extension.schema.workflow.WorkflowTriggerExtension;
+import org.nabucco.framework.base.facade.datatype.extension.schema.workflow.effect.ConstraintEffectExtension;
 import org.nabucco.framework.base.facade.datatype.extension.schema.workflow.effect.InstantiationEffectExtension;
 import org.nabucco.framework.base.facade.datatype.extension.schema.workflow.effect.LogEffectExtension;
 import org.nabucco.framework.base.facade.datatype.extension.schema.workflow.effect.SubWorkflowEffectExtension;
@@ -46,6 +47,7 @@ import org.nabucco.framework.workflow.facade.datatype.definition.condition.Workf
 import org.nabucco.framework.workflow.facade.datatype.definition.condition.WorkflowConditionType;
 import org.nabucco.framework.workflow.facade.datatype.definition.effect.WorkflowEffect;
 import org.nabucco.framework.workflow.facade.datatype.definition.effect.WorkflowEffectType;
+import org.nabucco.framework.workflow.facade.datatype.definition.effect.constraint.DynamicConstraintEffect;
 import org.nabucco.framework.workflow.facade.datatype.definition.effect.instantiable.InstantiableEffect;
 import org.nabucco.framework.workflow.facade.datatype.definition.effect.log.LogEffect;
 import org.nabucco.framework.workflow.facade.datatype.definition.effect.subworkflow.SubWorkflowEffect;
@@ -299,7 +301,7 @@ public class WorkflowDefinitionConfigurationMapper {
             condition = instantiableCondition;
             break;
         }
-        
+
         case BOOLEAN: {
             BooleanCondition booleanCondition = new BooleanCondition();
             booleanCondition.setOperator(PropertyLoader.loadProperty(BooleanOperator.class, extension.getOperator()));
@@ -381,6 +383,20 @@ public class WorkflowDefinitionConfigurationMapper {
             subWorkflowEffect.setAssignedRole(PropertyLoader.loadProperty(subWorkflowExtension.getAssignedRole()));
             effect = subWorkflowEffect;
 
+            break;
+        }
+
+        case CONSTRAINT: {
+            ConstraintEffectExtension constraintExt = (ConstraintEffectExtension) extension;
+            DynamicConstraintEffect dynamicCodeEffect = new DynamicConstraintEffect();
+            dynamicCodeEffect.setEditable(PropertyLoader.loadProperty(constraintExt.getEditable()));
+            dynamicCodeEffect.setVisible(PropertyLoader.loadProperty(constraintExt.getVisible()));
+            dynamicCodeEffect.setMinLength(PropertyLoader.loadProperty(constraintExt.getMinLength()));
+            dynamicCodeEffect.setMaxLength(PropertyLoader.loadProperty(constraintExt.getMaxLength()));
+            dynamicCodeEffect.setMinMultiplicity(PropertyLoader.loadProperty(constraintExt.getMinMultiplicity()));
+            dynamicCodeEffect.setMaxMultiplicity(PropertyLoader.loadProperty(constraintExt.getMaxMultiplicity()));
+
+            effect = dynamicCodeEffect;
             break;
         }
 

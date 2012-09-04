@@ -28,6 +28,8 @@ import org.nabucco.framework.workflow.facade.message.instance.WorkflowInstanceMs
 public Service MaintainWorkflowInstance  {
 
 	@ManualImplementation
+	@JoinPoint				org.nabucco.aspect.relating
+	@JoinPoint				org.nabucco.aspect.resolving
 	public WorkflowInstanceMsg maintainWorkflowInstance(WorkflowInstanceMsg wdsMsg) throws MaintainException;
 	
 }

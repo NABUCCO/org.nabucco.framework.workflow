@@ -18,7 +18,9 @@ package org.nabucco.framework.workflow.impl.service.definition.produce;
 
 import org.nabucco.framework.base.facade.datatype.DatatypeState;
 import org.nabucco.framework.base.facade.datatype.Description;
+import org.nabucco.framework.base.facade.datatype.Flag;
 import org.nabucco.framework.base.facade.datatype.Name;
+import org.nabucco.framework.base.facade.datatype.Number;
 import org.nabucco.framework.base.facade.datatype.Owner;
 import org.nabucco.framework.base.facade.datatype.Path;
 import org.nabucco.framework.base.facade.exception.service.ProduceException;
@@ -41,8 +43,7 @@ public class ProduceWorkflowEffectServiceHandlerImpl extends ProduceWorkflowEffe
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected WorkflowEffectMsg produceWorkflowEffect(ProduceWorkflowEffectRq request)
-            throws ProduceException {
+    protected WorkflowEffectMsg produceWorkflowEffect(ProduceWorkflowEffectRq request) throws ProduceException {
         WorkflowEffectMsg result = new WorkflowEffectMsg();
 
         switch (request.getEffectType()) {
@@ -100,6 +101,12 @@ public class ProduceWorkflowEffectServiceHandlerImpl extends ProduceWorkflowEffe
      */
     private WorkflowEffect createConstraintEffect() {
         DynamicConstraintEffect effect = new DynamicConstraintEffect();
+        effect.setEditable(new Flag());
+        effect.setVisible(new Flag());
+        effect.setMinLength(new Number());
+        effect.setMaxLength(new Number());
+        effect.setMinMultiplicity(new Number());
+        effect.setMaxMultiplicity(new Number());
         return effect;
     }
 

@@ -1,18 +1,16 @@
 /*
  * Copyright 2012 PRODYNA AG
- *
- * Licensed under the Eclipse Public License (EPL), Version 1.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
+ * 
+ * Licensed under the Eclipse Public License (EPL), Version 1.0 (the "License"); you may not use
+ * this file except in compliance with the License. You may obtain a copy of the License at
+ * 
  * http://www.opensource.org/licenses/eclipse-1.0.php or
  * http://www.nabucco.org/License.html
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
  */
 package org.nabucco.framework.workflow.ui.web.communication;
 
@@ -22,6 +20,10 @@ import org.nabucco.framework.base.facade.exception.service.ServiceException;
 import org.nabucco.framework.base.ui.web.communication.ServiceDelegateFactorySupport;
 import org.nabucco.framework.workflow.facade.component.WorkflowComponent;
 import org.nabucco.framework.workflow.facade.component.WorkflowComponentLocator;
+import org.nabucco.framework.workflow.ui.web.communication.datatype.maintain.MaintainWorkflowDatatypeDelegate;
+import org.nabucco.framework.workflow.ui.web.communication.datatype.produce.ProduceWorkflowDatatypeDelegate;
+import org.nabucco.framework.workflow.ui.web.communication.datatype.resolve.ResolveWorkflowDatatypeDelegate;
+import org.nabucco.framework.workflow.ui.web.communication.datatype.search.SearchWorkflowDatatypeDelegate;
 import org.nabucco.framework.workflow.ui.web.communication.definition.maintain.MaintainWorkflowDefinitionDelegate;
 import org.nabucco.framework.workflow.ui.web.communication.definition.produce.ProduceWorkflowDefinitionDelegate;
 import org.nabucco.framework.workflow.ui.web.communication.definition.resolve.ResolveWorkflowDefinitionDelegate;
@@ -59,6 +61,14 @@ public class WorkflowComponentServiceDelegateFactory extends ServiceDelegateFact
     private ResolveWorkflowInstanceDelegate resolveWorkflowInstanceDelegate;
 
     private WorkflowEngineServiceDelegate workflowEngineServiceDelegate;
+
+    private SearchWorkflowDatatypeDelegate searchWorkflowDatatypeDelegate;
+
+    private ResolveWorkflowDatatypeDelegate resolveWorkflowDatatypeDelegate;
+
+    private ProduceWorkflowDatatypeDelegate produceWorkflowDatatypeDelegate;
+
+    private MaintainWorkflowDatatypeDelegate maintainWorkflowDatatypeDelegate;
 
     /** Constructs a new WorkflowComponentServiceDelegateFactory instance. */
     private WorkflowComponentServiceDelegateFactory() {
@@ -240,6 +250,86 @@ public class WorkflowComponentServiceDelegateFactory extends ServiceDelegateFact
             return this.workflowEngineServiceDelegate;
         } catch (ConnectionException e) {
             throw new ClientException("Cannot locate service: WorkflowEngineService", e);
+        } catch (ServiceException e) {
+            throw new ClientException("Cannot locate service: ServiceDelegateTemplate", e);
+        }
+    }
+
+    /**
+     * Getter for the SearchWorkflowDatatype.
+     *
+     * @return the SearchWorkflowDatatypeDelegate.
+     * @throws ClientException
+     */
+    public SearchWorkflowDatatypeDelegate getSearchWorkflowDatatype() throws ClientException {
+        try {
+            if ((this.searchWorkflowDatatypeDelegate == null)) {
+                this.searchWorkflowDatatypeDelegate = new SearchWorkflowDatatypeDelegate(this.getComponent()
+                        .getSearchWorkflowDatatype());
+            }
+            return this.searchWorkflowDatatypeDelegate;
+        } catch (ConnectionException e) {
+            throw new ClientException("Cannot locate service: SearchWorkflowDatatype", e);
+        } catch (ServiceException e) {
+            throw new ClientException("Cannot locate service: ServiceDelegateTemplate", e);
+        }
+    }
+
+    /**
+     * Getter for the ResolveWorkflowDatatype.
+     *
+     * @return the ResolveWorkflowDatatypeDelegate.
+     * @throws ClientException
+     */
+    public ResolveWorkflowDatatypeDelegate getResolveWorkflowDatatype() throws ClientException {
+        try {
+            if ((this.resolveWorkflowDatatypeDelegate == null)) {
+                this.resolveWorkflowDatatypeDelegate = new ResolveWorkflowDatatypeDelegate(this.getComponent()
+                        .getResolveWorkflowDatatype());
+            }
+            return this.resolveWorkflowDatatypeDelegate;
+        } catch (ConnectionException e) {
+            throw new ClientException("Cannot locate service: ResolveWorkflowDatatype", e);
+        } catch (ServiceException e) {
+            throw new ClientException("Cannot locate service: ServiceDelegateTemplate", e);
+        }
+    }
+
+    /**
+     * Getter for the ProduceWorkflowDatatype.
+     *
+     * @return the ProduceWorkflowDatatypeDelegate.
+     * @throws ClientException
+     */
+    public ProduceWorkflowDatatypeDelegate getProduceWorkflowDatatype() throws ClientException {
+        try {
+            if ((this.produceWorkflowDatatypeDelegate == null)) {
+                this.produceWorkflowDatatypeDelegate = new ProduceWorkflowDatatypeDelegate(this.getComponent()
+                        .getProduceWorkflowDatatype());
+            }
+            return this.produceWorkflowDatatypeDelegate;
+        } catch (ConnectionException e) {
+            throw new ClientException("Cannot locate service: ProduceWorkflowDatatype", e);
+        } catch (ServiceException e) {
+            throw new ClientException("Cannot locate service: ServiceDelegateTemplate", e);
+        }
+    }
+
+    /**
+     * Getter for the MaintainWorkflowDatatype.
+     *
+     * @return the MaintainWorkflowDatatypeDelegate.
+     * @throws ClientException
+     */
+    public MaintainWorkflowDatatypeDelegate getMaintainWorkflowDatatype() throws ClientException {
+        try {
+            if ((this.maintainWorkflowDatatypeDelegate == null)) {
+                this.maintainWorkflowDatatypeDelegate = new MaintainWorkflowDatatypeDelegate(this.getComponent()
+                        .getMaintainWorkflowDatatype());
+            }
+            return this.maintainWorkflowDatatypeDelegate;
+        } catch (ConnectionException e) {
+            throw new ClientException("Cannot locate service: MaintainWorkflowDatatype", e);
         } catch (ServiceException e) {
             throw new ClientException("Cannot locate service: ServiceDelegateTemplate", e);
         }

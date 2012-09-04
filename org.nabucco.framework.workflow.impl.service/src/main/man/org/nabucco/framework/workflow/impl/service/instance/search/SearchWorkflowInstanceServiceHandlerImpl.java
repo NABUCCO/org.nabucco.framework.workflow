@@ -155,7 +155,7 @@ public class SearchWorkflowInstanceServiceHandlerImpl extends SearchWorkflowInst
         if (wdsp != null) {
             boolean containsStateName = false;
             boolean containsStateType = false;
-            
+
             for (WorkflowStateSearchParameter stateParam : wdsp.getStateParameters()) {
                 if (stateParam.getStateName() != null) {
                     containsStateName = true;
@@ -281,15 +281,13 @@ public class SearchWorkflowInstanceServiceHandlerImpl extends SearchWorkflowInst
             }
         }
 
-        if (stateNames.isEmpty()) {
-            stateNames = null;
+        if (!stateNames.isEmpty()) {
+            query.setParameter(WorkflowStateSearchParameter.STATENAME, stateNames);
         }
-        if (stateTypes.isEmpty()) {
-            stateTypes = null;
+        if (!stateTypes.isEmpty()) {
+            query.setParameter(WorkflowStateSearchParameter.STATETYPE, stateTypes);
         }
 
-        query.setParameter(WorkflowStateSearchParameter.STATENAME, stateNames);
-        query.setParameter(WorkflowStateSearchParameter.STATETYPE, stateTypes);
     }
 
 }
